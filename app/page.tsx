@@ -12,7 +12,7 @@ export default function Home() {
               <GraduationCap className="h-8 w-8 text-blue-600" />
               <span className="text-xl font-bold text-gray-900">D&apos;Zombe Music Hub</span>
             </div>
-            <div className="flex gap-6">
+            <div className="flex items-center gap-6">
               <Link href="/" className="text-blue-600 font-medium">
                 Home
               </Link>
@@ -21,6 +21,15 @@ export default function Home() {
               </Link>
               <Link href="/enrollment" className="text-gray-700 hover:text-blue-600 font-medium">
                 Enroll
+              </Link>
+              <Link href="/login" className="text-gray-700 hover:text-blue-600 font-medium">
+                Login
+              </Link>
+              <Link 
+                href="/signup" 
+                className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+              >
+                Get Started
               </Link>
             </div>
           </div>
