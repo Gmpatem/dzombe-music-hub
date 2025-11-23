@@ -2,7 +2,8 @@ import { db } from '@/lib/firebase/config';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { Program } from '@/types/program';
 import Link from 'next/link';
-import { GraduationCap, Clock, BookOpen } from 'lucide-react';
+import Image from 'next/image';
+import { GraduationCap, Clock, BookOpen, Star, Award, ChevronRight, Music } from 'lucide-react';
 
 async function getPrograms(): Promise<Program[]> {
   try {
@@ -18,7 +19,7 @@ async function getPrograms(): Promise<Program[]> {
         name: data.name || '',
         description: data.description || '',
         price: data.price || 0,
-        currency: data.currency || 'USD',
+        currency: data.currency || '₱',
         duration: data.duration || '',
         category: data.category || '',
         level: data.level || '',
@@ -40,113 +41,222 @@ async function getPrograms(): Promise<Program[]> {
 export default async function ProgramsPage() {
   const programs = await getPrograms();
 
+  // Get gradient based on level
+  const getLevelGradient = (level: string) => {
+    switch (level.toLowerCase()) {
+      case 'beginner':
+        return 'from-blue-500 to-blue-600';
+      case 'intermediate':
+        return 'from-purple-500 to-purple-600';
+      case 'advanced':
+        return 'from-pink-500 to-pink-600';
+      default:
+        return 'from-blue-500 to-purple-600';
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm">
+    <div className="min-h-screen bg-white overflow-x-hidden">
+      {/* Hero Section with Background Image */}
+      <section className="relative min-h-[60vh] flex items-center overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <div className="relative w-full h-full">
+            <Image
+              src="/images/images.jpg"
+              alt="Music programs background"
+              fill
+              className="object-cover object-center"
+              priority
+              quality={90}
+              sizes="100vw"
+            />
+            {/* Gradient Overlays */}
+            <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/70 to-black/60"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent"></div>
+          </div>
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 text-center">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white px-4 py-2 rounded-full text-sm font-semibold mb-6 border border-white/20">
+            <Award className="h-4 w-4" />
+            <span>Expert-Led Courses</span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+            Our Music 
+            <span className="block bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mt-2">
+              Programs
+            </span>
+          </h1>
+          
+          <p className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto mb-8 leading-relaxed">
+            Choose from our comprehensive range of music courses designed for all skill levels. 
+            From beginners to advanced musicians, we have the perfect program for you.
+          </p>
+
+          {/* Stats */}
+          <div className="flex flex-wrap justify-center gap-6 sm:gap-12 text-sm">
+            <div className="flex items-center gap-2">
+              <Music className="h-5 w-5 text-blue-400" />
+              <div className="text-left">
+                <div className="text-white font-bold text-lg">{programs.length}+</div>
+                <div className="text-gray-300 text-xs">Active Programs</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <GraduationCap className="h-5 w-5 text-purple-400" />
+              <div className="text-left">
+                <div className="text-white font-bold text-lg">500+</div>
+                <div className="text-gray-300 text-xs">Students Enrolled</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <div className="text-left">
+                <div className="text-white font-bold text-lg">4.9/5</div>
+                <div className="text-gray-300 text-xs">Average Rating</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Programs Section */}
+      <section className="py-16 sm:py-24 bg-linear-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center gap-2">
-              <GraduationCap className="h-8 w-8 text-blue-600" />
-              <span className="text-xl font-bold text-gray-900">D&apos;Zombe Music Hub</span>
-            </Link>
-            <div className="flex gap-6">
-              <Link href="/" className="text-gray-700 hover:text-blue-600 font-medium">
-                Home
-              </Link>
-              <Link href="/programs" className="text-blue-600 font-medium">
-                Programs
-              </Link>
-              <Link href="/enrollment" className="text-gray-700 hover:text-blue-600 font-medium">
-                Enroll
+          {programs.length === 0 ? (
+            <div className="text-center py-16">
+              <div className="bg-white/80 backdrop-blur-sm p-12 rounded-2xl border border-gray-200 shadow-lg max-w-md mx-auto">
+                <BookOpen className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-600 text-lg font-medium mb-2">No programs available</p>
+                <p className="text-gray-500 text-sm">Check back soon for new courses!</p>
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* Section Header */}
+              <div className="text-center mb-12 sm:mb-16">
+                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                  All Programs
+                </h2>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                  Select the program that matches your skill level and musical goals
+                </p>
+              </div>
+
+              {/* Programs Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                {programs.map((program) => (
+                  <div
+                    key={program.id}
+                    className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100 overflow-hidden"
+                  >
+                    {/* Program Header with Gradient */}
+                    <div className={`relative bg-linear-to-r ${getLevelGradient(program.level)} p-6 text-white overflow-hidden`}>
+                      {/* Decorative circles */}
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-white rounded-full opacity-10 -translate-y-16 translate-x-16"></div>
+                      <div className="absolute bottom-0 left-0 w-24 h-24 bg-white rounded-full opacity-10 translate-y-12 -translate-x-12"></div>
+                      
+                      <div className="relative z-10">
+                        {/* Level Badge */}
+                        <div className="inline-block px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-semibold mb-3 border border-white/30">
+                          {program.level}
+                        </div>
+                        
+                        <h3 className="text-2xl font-bold mb-2 group-hover:scale-105 transition-transform">
+                          {program.name}
+                        </h3>
+                        
+                        <div className="flex items-center gap-2 text-white/90">
+                          <BookOpen className="h-4 w-4" />
+                          <span className="text-sm">{program.category || 'Music Education'}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Program Body */}
+                    <div className="p-6">
+                      <p className="text-gray-600 mb-6 leading-relaxed line-clamp-3 min-h-18">
+                        {program.description || 'Comprehensive music program designed to help you master your craft.'}
+                      </p>
+
+                      {/* Program Details */}
+                      <div className="space-y-3 mb-6">
+                        <div className="flex items-center gap-3 text-gray-700">
+                          <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+                            <Clock className="h-5 w-5 text-blue-600" />
+                          </div>
+                          <div>
+                            <div className="text-xs text-gray-500">Duration</div>
+                            <div className="text-sm font-semibold">{program.duration}</div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                          <div>
+                            <div className="text-xs text-gray-500 mb-1">Course Fee</div>
+                            <div className="text-3xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                              {program.currency}{program.price}
+                            </div>
+                          </div>
+                          <Award className="h-8 w-8 text-gray-300 group-hover:text-blue-500 transition-colors" />
+                        </div>
+                      </div>
+
+                      {/* Enroll Button */}
+                      <Link
+                        href="/enrollment"
+                        className="group/btn relative block w-full overflow-hidden rounded-lg"
+                      >
+                        <div className={`absolute inset-0 bg-linear-to-r ${getLevelGradient(program.level)} opacity-90 group-hover/btn:opacity-100 transition-opacity`}></div>
+                        <div className="relative flex items-center justify-center gap-2 py-3 text-white font-bold">
+                          <span>Enroll Now</span>
+                          <ChevronRight className="h-5 w-5 group-hover/btn:translate-x-1 transition-transform" />
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 sm:py-20 px-4 bg-gray-900">
+        <div className="max-w-5xl mx-auto">
+          <div className="relative overflow-hidden bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl p-8 sm:p-12 lg:p-16 text-center text-white shadow-2xl">
+            {/* Decorative Elements */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full mix-blend-soft-light filter blur-3xl opacity-10 animate-pulse"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full mix-blend-soft-light filter blur-3xl opacity-10 [animation-delay:1s] animate-pulse"></div>
+
+            <div className="relative z-10">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
+                Ready to Start Learning?
+              </h2>
+              <p className="text-lg sm:text-xl mb-8 sm:mb-10 text-blue-100 max-w-2xl mx-auto">
+                Join hundreds of students mastering music with D&apos;Zombe Music Hub. 
+                Enroll today and begin your musical journey!
+              </p>
+              <Link 
+                href="/enrollment"
+                className="inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-base sm:text-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-xl"
+              >
+                Enroll Now
+                <ChevronRight className="h-5 w-5" />
               </Link>
             </div>
           </div>
         </div>
-      </nav>
-
-      {/* Header */}
-      <div className="bg-blue-600 text-white py-16 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Our Music Programs
-          </h1>
-          <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-            Choose from our comprehensive range of music courses designed for all skill levels
-          </p>
-        </div>
-      </div>
-
-      {/* Programs Grid */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        {programs.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No programs available at the moment.</p>
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {programs.map((program) => (
-              <div
-                key={program.id}
-                className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden"
-              >
-                {/* Program Header */}
-                <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white">
-                  <h3 className="text-2xl font-bold mb-2">{program.name}</h3>
-                  <div className="flex items-center gap-2 text-blue-100">
-                    <BookOpen className="h-4 w-4" />
-                    <span className="text-sm capitalize">{program.level}</span>
-                  </div>
-                </div>
-
-                {/* Program Body */}
-                <div className="p-6">
-                  <p className="text-gray-600 mb-6 line-clamp-3">
-                    {program.description}
-                  </p>
-
-                  {/* Program Details */}
-                  <div className="space-y-3 mb-6">
-                    <div className="flex items-center gap-2 text-gray-700">
-                      <Clock className="h-5 w-5 text-blue-600" />
-                      <span className="text-sm font-medium">{program.duration}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-3xl font-bold text-blue-600">
-                        {program.currency}{program.price}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Enroll Button */}
-                  <Link
-                    href="/enrollment"
-                    className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
-                  >
-                    Enroll Now
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8 px-4 mt-12">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <GraduationCap className="h-6 w-6" />
-            <span className="text-lg font-semibold">D&apos;Zombe Music Hub</span>
-          </div>
-          <p className="text-gray-400 mb-4">
-            Empowering musicians through quality online education
-          </p>
-          <p className="text-gray-500 text-sm">
-            © 2024 D&apos;Zombe Music Hub. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      </section>
     </div>
   );
 }
