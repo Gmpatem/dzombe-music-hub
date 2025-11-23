@@ -10,10 +10,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 sm:h-20">
             <Link href="/" className="flex items-center gap-2 sm:gap-3">
-              <div className="bg-gradient-to-br from-blue-600 to-purple-600 p-2 rounded-lg shadow-lg">
+              <div className="bg-linear-to-br from-blue-600 to-purple-600 p-2 rounded-lg shadow-lg">
                 <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
-              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-lg sm:text-xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 D&apos;Zombe
               </span>
             </Link>
@@ -31,7 +31,7 @@ export default function Home() {
               </Link>
               <Link 
                 href="/signup" 
-                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
+                className="bg-linear-to-r from-blue-600 to-purple-600 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
                 Get Started
               </Link>
@@ -47,7 +47,7 @@ export default function Home() {
               </Link>
               <Link 
                 href="/signup" 
-                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full font-semibold text-sm hover:shadow-lg transition-all"
+                className="bg-linear-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full font-semibold text-sm hover:shadow-lg transition-all"
               >
                 Sign Up
               </Link>
@@ -70,8 +70,8 @@ export default function Home() {
               quality={90}
             />
             {/* Gradient Overlays for readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-r from-black/70 via-black/50 to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"></div>
           </div>
         </div>
 
@@ -87,7 +87,7 @@ export default function Home() {
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
               Master Your
-              <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mt-2">
+              <span className="block bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mt-2">
                 Musical Journey
               </span>
             </h1>
@@ -102,7 +102,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link 
                 href="/programs"
-                className="group bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-base sm:text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+                className="group bg-linear-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-base sm:text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
               >
                 <Play className="h-5 w-5" />
                 Explore Programs
@@ -121,7 +121,7 @@ export default function Home() {
               <div className="flex items-center gap-3">
                 <div className="flex -space-x-2">
                   {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 border-2 border-white"></div>
+                    <div key={i} className="w-10 h-10 rounded-full bg-linear-to-br from-blue-400 to-purple-400 border-2 border-white"></div>
                   ))}
                 </div>
                 <div>
@@ -153,7 +153,7 @@ export default function Home() {
       </section>
 
       {/* Instructor Showcase Section */}
-      <section className="py-12 sm:py-20 bg-gradient-to-b from-gray-900 to-gray-800 text-white relative overflow-hidden">
+      <section className="py-12 sm:py-20 bg-linear-to-b from-gray-900 to-gray-800 text-white relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '40px 40px'}}></div>
@@ -162,7 +162,7 @@ export default function Home() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-              Meet Our <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Expert Instructors</span>
+              Meet Our <span className="bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Expert Instructors</span>
             </h2>
             <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto">
               Learn from professional musicians with years of performance and teaching experience
@@ -171,7 +171,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {/* Instructor Card 1 - Pianist in Pink */}
-            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-blue-500 transition-all duration-300">
+            <div className="group relative overflow-hidden rounded-2xl bg-linear-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-blue-500 transition-all duration-300">
               <div className="relative h-80 overflow-hidden">
                 <Image
                   src="/images/third_pic_.jpg"
@@ -180,7 +180,7 @@ export default function Home() {
                   className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
                   quality={85}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
               </div>
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <h3 className="text-xl font-bold mb-1">Piano & Keys</h3>
@@ -189,7 +189,7 @@ export default function Home() {
             </div>
 
             {/* Instructor Card 2 - Violinist */}
-            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-purple-500 transition-all duration-300">
+            <div className="group relative overflow-hidden rounded-2xl bg-linear-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-purple-500 transition-all duration-300">
               <div className="relative h-80 overflow-hidden">
                 <Image
                   src="/images/Second_pic.jpg"
@@ -198,7 +198,7 @@ export default function Home() {
                   className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
                   quality={85}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
               </div>
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <h3 className="text-xl font-bold mb-1">Strings & Violin</h3>
@@ -207,7 +207,7 @@ export default function Home() {
             </div>
 
             {/* Instructor Card 3 - Performance */}
-            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-pink-500 transition-all duration-300 md:col-span-2 lg:col-span-1">
+            <div className="group relative overflow-hidden rounded-2xl bg-linear-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-pink-500 transition-all duration-300 md:col-span-2 lg:col-span-1">
               <div className="relative h-80 overflow-hidden">
                 <Image
                   src="/images/FB_IMG_1760189938791.jpg"
@@ -216,7 +216,7 @@ export default function Home() {
                   className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
                   quality={85}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
+                <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
               </div>
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <h3 className="text-xl font-bold mb-1">Performance & Theory</h3>
@@ -238,7 +238,7 @@ export default function Home() {
             className="object-cover opacity-10"
             quality={70}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-white via-white/95 to-white"></div>
+          <div className="absolute inset-0 bg-linear-to-b from-white via-white/95 to-white"></div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4">
@@ -254,7 +254,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {/* Feature Cards with Premium Design */}
             <div className="group bg-white/80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-blue-100 hover:shadow-2xl hover:scale-105 transition-all duration-300">
-              <div className="bg-gradient-to-br from-blue-600 to-purple-600 w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+              <div className="bg-linear-to-br from-blue-600 to-purple-600 w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
                 <Music className="h-7 w-7 text-white" />
               </div>
               <h3 className="text-xl sm:text-2xl font-bold mb-3 text-gray-900">Expert Instructors</h3>
@@ -264,7 +264,7 @@ export default function Home() {
             </div>
 
             <div className="group bg-white/80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-purple-100 hover:shadow-2xl hover:scale-105 transition-all duration-300">
-              <div className="bg-gradient-to-br from-purple-600 to-pink-600 w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+              <div className="bg-linear-to-br from-purple-600 to-pink-600 w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
                 <Clock className="h-7 w-7 text-white" />
               </div>
               <h3 className="text-xl sm:text-2xl font-bold mb-3 text-gray-900">Flexible Schedule</h3>
@@ -274,7 +274,7 @@ export default function Home() {
             </div>
 
             <div className="group bg-white/80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-pink-100 hover:shadow-2xl hover:scale-105 transition-all duration-300 sm:col-span-2 lg:col-span-1">
-              <div className="bg-gradient-to-br from-pink-600 to-orange-600 w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
+              <div className="bg-linear-to-br from-pink-600 to-orange-600 w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
                 <Users className="h-7 w-7 text-white" />
               </div>
               <h3 className="text-xl sm:text-2xl font-bold mb-3 text-gray-900">Community Support</h3>
@@ -287,7 +287,7 @@ export default function Home() {
       </section>
 
       {/* Programs Preview */}
-      <section className="py-12 sm:py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-12 sm:py-20 px-4 bg-linear-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
@@ -309,7 +309,7 @@ export default function Home() {
                 key={index}
                 className="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100"
               >
-                <div className={`inline-block px-3 py-1 rounded-full text-sm font-semibold mb-4 bg-gradient-to-r ${program.gradient} text-white`}>
+                <div className={`inline-block px-3 py-1 rounded-full text-sm font-semibold mb-4 bg-linear-to-r ${program.gradient} text-white`}>
                   {program.level}
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-blue-600 transition">
@@ -320,7 +320,7 @@ export default function Home() {
                 </p>
                 <div className="flex items-end justify-between">
                   <div>
-                    <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    <div className="text-3xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                       ₱{program.price}
                     </div>
                     <div className="text-xs text-gray-500 mt-1">per course</div>
@@ -334,7 +334,7 @@ export default function Home() {
           <div className="text-center mt-10 sm:mt-12">
             <Link 
               href="/programs"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-base sm:text-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+              className="inline-flex items-center gap-2 bg-linear-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-base sm:text-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
             >
               View All Programs
               <ChevronRight className="h-5 w-5" />
@@ -346,7 +346,7 @@ export default function Home() {
       {/* CTA Section - Mobile Optimized */}
       <section className="py-12 sm:py-20 px-4 bg-gray-900">
         <div className="max-w-5xl mx-auto">
-          <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl p-8 sm:p-12 lg:p-16 text-center text-white shadow-2xl">
+          <div className="relative overflow-hidden bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl p-8 sm:p-12 lg:p-16 text-center text-white shadow-2xl">
             {/* Decorative Elements */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full mix-blend-soft-light filter blur-3xl opacity-10 animate-pulse"></div>
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full mix-blend-soft-light filter blur-3xl opacity-10 animate-pulse" style={{animationDelay: '1s'}}></div>
@@ -377,7 +377,7 @@ export default function Home() {
             {/* Brand */}
             <div className="sm:col-span-2 lg:col-span-1">
               <div className="flex items-center justify-center sm:justify-start gap-2 mb-4">
-                <div className="bg-gradient-to-br from-blue-600 to-purple-600 p-2 rounded-lg">
+                <div className="bg-linear-to-br from-blue-600 to-purple-600 p-2 rounded-lg">
                   <GraduationCap className="h-6 w-6 text-white" />
                 </div>
                 <span className="text-xl font-bold">D&apos;Zombe Music Hub</span>
