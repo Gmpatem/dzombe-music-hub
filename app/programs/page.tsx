@@ -128,25 +128,30 @@ export default async function ProgramsPage() {
         </div>
       </section>
 
-      {/* Programs Section */}
-      <section className="py-16 sm:py-24 bg-linear-to-b from-gray-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Programs Section with Glowing Orbs */}
+      <section className="relative py-16 sm:py-24 bg-gray-900 overflow-hidden">
+        {/* Floating gradient orbs */}
+        <div className="absolute top-20 -left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-80 h-80 bg-purple-500/15 rounded-full blur-3xl [animation-delay:1s] animate-pulse"></div>
+        <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-pink-500/15 rounded-full blur-3xl [animation-delay:2s] animate-pulse"></div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {programs.length === 0 ? (
             <div className="text-center py-16">
-              <div className="bg-white/80 backdrop-blur-sm p-12 rounded-2xl border border-gray-200 shadow-lg max-w-md mx-auto">
+              <div className="bg-white/10 backdrop-blur-lg p-12 rounded-2xl border border-white/10 shadow-lg max-w-md mx-auto">
                 <BookOpen className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600 text-lg font-medium mb-2">No programs available</p>
-                <p className="text-gray-500 text-sm">Check back soon for new courses!</p>
+                <p className="text-gray-300 text-lg font-medium mb-2">No programs available</p>
+                <p className="text-gray-400 text-sm">Check back soon for new courses!</p>
               </div>
             </div>
           ) : (
             <>
               {/* Section Header */}
               <div className="text-center mb-12 sm:mb-16">
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
                   All Programs
                 </h2>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                <p className="text-lg text-gray-300 max-w-2xl mx-auto">
                   Select the program that matches your skill level and musical goals
                 </p>
               </div>
@@ -156,7 +161,7 @@ export default async function ProgramsPage() {
                 {programs.map((program) => (
                   <div
                     key={program.id}
-                    className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100 overflow-hidden"
+                    className="group bg-white/10 backdrop-blur-lg rounded-2xl border border-white/10 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden"
                   >
                     {/* Program Header with Gradient */}
                     <div className={`relative bg-linear-to-r ${getLevelGradient(program.level)} p-6 text-white overflow-hidden`}>
@@ -183,36 +188,36 @@ export default async function ProgramsPage() {
 
                     {/* Program Body */}
                     <div className="p-6">
-                      <p className="text-gray-600 mb-6 leading-relaxed line-clamp-3 min-h-18">
+                      <p className="text-gray-300 mb-6 leading-relaxed line-clamp-3 min-h-18">
                         {program.description || 'Comprehensive music program designed to help you master your craft.'}
                       </p>
 
                       {/* Program Details */}
                       <div className="space-y-3 mb-6">
-                        <div className="flex items-center gap-3 text-gray-700">
-                          <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-                            <Clock className="h-5 w-5 text-blue-600" />
+                        <div className="flex items-center gap-3 text-gray-200">
+                          <div className="w-10 h-10 rounded-lg bg-blue-500/20 border border-blue-500/30 flex items-center justify-center">
+                            <Clock className="h-5 w-5 text-blue-400" />
                           </div>
                           <div>
-                            <div className="text-xs text-gray-500">Duration</div>
+                            <div className="text-xs text-gray-400">Duration</div>
                             <div className="text-sm font-semibold">{program.duration}</div>
                           </div>
                         </div>
                         
-                        <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                        <div className="flex items-center justify-between pt-2 border-t border-white/10">
                           <div>
-                            <div className="text-xs text-gray-500 mb-1">Course Fee</div>
-                            <div className="text-3xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                            <div className="text-xs text-gray-400 mb-1">Course Fee</div>
+                            <div className="text-3xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                               {program.currency}{program.price}
                             </div>
                           </div>
-                          <Award className="h-8 w-8 text-gray-300 group-hover:text-blue-500 transition-colors" />
+                          <Award className="h-8 w-8 text-gray-600 group-hover:text-blue-400 transition-colors" />
                         </div>
                       </div>
 
                       {/* Enroll Button */}
                       <Link
-                        href="/enrollment"
+                        href="/login"
                         className="group/btn relative block w-full overflow-hidden rounded-lg"
                       >
                         <div className={`absolute inset-0 bg-linear-to-r ${getLevelGradient(program.level)} opacity-90 group-hover/btn:opacity-100 transition-opacity`}></div>
@@ -247,7 +252,7 @@ export default async function ProgramsPage() {
                 Enroll today and begin your musical journey!
               </p>
               <Link 
-                href="/enrollment"
+                href="/login"
                 className="inline-flex items-center gap-2 bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-base sm:text-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-xl"
               >
                 Enroll Now
