@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import { GraduationCap, Music, Users, Clock, Award, BookOpen, Star, ChevronRight, Play, Quote } from 'lucide-react';
+import { GraduationCap, Music, Users, Clock, Award, BookOpen, Star, ChevronRight, Play } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -56,22 +55,15 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section with Parallax Image */}
+      {/* Hero Section with Premium Gradient Background */}
       <section className="relative min-h-[90vh] sm:min-h-screen flex items-center overflow-hidden pt-16 sm:pt-20">
-        {/* Background Image with Overlay - Pianist in Blue Suit */}
+        {/* Premium Gradient Background - Navy to Gold */}
         <div className="absolute inset-0 z-0">
-          <div className="relative w-full h-full">
-            <Image
-              src="/images/First_pick.jpg"
-              alt="Professional pianist"
-              fill
-              className="object-cover object-center"
-              priority
-              quality={90}
-            />
-            {/* Gradient Overlays for readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+          <div className="relative w-full h-full bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700">
+            {/* Animated gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-gold-700/20 via-transparent to-gold-500/10"></div>
+            {/* Subtle pattern overlay */}
+            <div className="absolute inset-0 opacity-5" style={{backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(245, 197, 66, 0.3) 1px, transparent 0)', backgroundSize: '40px 40px'}}></div>
           </div>
         </div>
 
@@ -170,75 +162,61 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {/* Instructor Card 1 - Pianist in Pink */}
-            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-blue-500 transition-all duration-300">
-              <div className="relative h-80 overflow-hidden">
-                <Image
-                  src="/images/third_pic_.jpg"
-                  alt="Piano instructor"
-                  fill
-                  className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
-                  quality={85}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
+            {/* Instructor Card 1 - Piano & Keys */}
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-navy-900 via-navy-800 to-gold-900/30 border border-gold-500/20 hover:border-gold-500 transition-all duration-300">
+              <div className="relative h-80 overflow-hidden bg-gradient-to-br from-gold-500/10 to-navy-900">
+                {/* Elegant icon representation */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Music className="h-32 w-32 text-gold-500/20 group-hover:text-gold-500/40 transition-all duration-500 group-hover:scale-110" />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/50 to-transparent"></div>
               </div>
               <div className="absolute bottom-0 left-0 right-0 p-6">
-                <h3 className="text-xl font-bold mb-1">Piano & Keys</h3>
-                <p className="text-gray-400 text-sm">Professional Instructor</p>
+                <h3 className="text-xl font-bold mb-1 text-white">Piano & Keys</h3>
+                <p className="text-gold-400 text-sm">Professional Instructor</p>
               </div>
             </div>
 
-            {/* Instructor Card 2 - Violinist */}
-            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-purple-500 transition-all duration-300">
-              <div className="relative h-80 overflow-hidden">
-                <Image
-                  src="/images/Second_pic.jpg"
-                  alt="Violin instructor"
-                  fill
-                  className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
-                  quality={85}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
+            {/* Instructor Card 2 - Strings & Violin */}
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-navy-900 via-navy-700 to-purple-900/30 border border-purple-500/20 hover:border-purple-500 transition-all duration-300">
+              <div className="relative h-80 overflow-hidden bg-gradient-to-br from-purple-500/10 to-navy-900">
+                {/* Elegant icon representation */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Music className="h-32 w-32 text-purple-500/20 group-hover:text-purple-500/40 transition-all duration-500 group-hover:scale-110" style={{transform: 'rotate(15deg)'}} />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/50 to-transparent"></div>
               </div>
               <div className="absolute bottom-0 left-0 right-0 p-6">
-                <h3 className="text-xl font-bold mb-1">Strings & Violin</h3>
-                <p className="text-gray-400 text-sm">Master Instructor</p>
+                <h3 className="text-xl font-bold mb-1 text-white">Strings & Violin</h3>
+                <p className="text-purple-400 text-sm">Master Instructor</p>
               </div>
             </div>
 
-            {/* Instructor Card 3 - Performance */}
-            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-pink-500 transition-all duration-300 md:col-span-2 lg:col-span-1">
-              <div className="relative h-80 overflow-hidden">
-                <Image
-                  src="/images/FB_IMG_1760189938791.jpg"
-                  alt="Performance instructor"
-                  fill
-                  className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
-                  quality={85}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
+            {/* Instructor Card 3 - Performance & Theory */}
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-navy-900 via-navy-800 to-pink-900/30 border border-pink-500/20 hover:border-pink-500 transition-all duration-300 md:col-span-2 lg:col-span-1">
+              <div className="relative h-80 overflow-hidden bg-gradient-to-br from-pink-500/10 to-navy-900">
+                {/* Elegant icon representation */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Award className="h-32 w-32 text-pink-500/20 group-hover:text-pink-500/40 transition-all duration-500 group-hover:scale-110" />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-navy-900 via-navy-900/50 to-transparent"></div>
               </div>
               <div className="absolute bottom-0 left-0 right-0 p-6">
-                <h3 className="text-xl font-bold mb-1">Performance & Theory</h3>
-                <p className="text-gray-400 text-sm">Lead Instructor</p>
+                <h3 className="text-xl font-bold mb-1 text-white">Performance & Theory</h3>
+                <p className="text-pink-400 text-sm">Lead Instructor</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section with Background Image */}
+      {/* Features Section with Premium Background */}
       <section className="relative py-16 sm:py-24 overflow-hidden">
-        {/* Background Image - Piano Keys */}
+        {/* Premium Gradient Background */}
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/images.jpg"
-            alt="Piano keys background"
-            fill
-            className="object-cover opacity-10"
-            quality={70}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-white via-white/95 to-white"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white"></div>
+          {/* Subtle pattern overlay */}
+          <div className="absolute inset-0 opacity-[0.02]" style={{backgroundImage: 'radial-gradient(circle at 2px 2px, rgb(10, 22, 40) 1px, transparent 0)', backgroundSize: '32px 32px'}}></div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4">
