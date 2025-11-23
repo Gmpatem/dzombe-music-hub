@@ -26,7 +26,10 @@ export default function Navbar() {
 
   // Close mobile menu when route changes
   useEffect(() => {
-    setIsMobileMenuOpen(false);
+    const closeMobileMenu = () => {
+      setIsMobileMenuOpen(false);
+    };
+    closeMobileMenu();
   }, [pathname]);
 
   const handleLogout = async () => {
