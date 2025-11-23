@@ -45,25 +45,25 @@ export default function Navbar() {
       <nav 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled 
-            ? 'bg-white/95 backdrop-blur-xl shadow-lg border-b border-gray-100' 
-            : 'bg-white/80 backdrop-blur-md shadow-sm'
+            ? 'bg-gray-900/95 backdrop-blur-xl shadow-2xl border-b border-white/10' 
+            : 'bg-black/40 backdrop-blur-md'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 sm:h-20">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-14 sm:h-16 lg:h-20">
+            {/* Logo - Simplified for mobile */}
+            <Link href="/" className="flex items-center gap-2 group shrink-0">
               <div className="relative">
-                <div className="absolute inset-0 bg-linear-to-br from-blue-600 to-purple-600 rounded-xl blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
-                <div className="relative bg-linear-to-br from-blue-600 to-purple-600 p-2.5 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <div className="absolute inset-0 bg-linear-to-br from-blue-500 to-purple-600 rounded-lg blur-sm opacity-60 group-hover:opacity-100 transition-opacity"></div>
+                <div className="relative bg-linear-to-br from-blue-500 to-purple-600 p-2 rounded-lg shadow-lg group-hover:shadow-xl transition-all duration-300">
                   <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 </div>
               </div>
               <div className="flex flex-col">
-                <span className="text-lg sm:text-xl font-bold bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                <span className="text-base sm:text-lg lg:text-xl font-bold text-white whitespace-nowrap">
                   D&apos;Zombe
                 </span>
-                <span className="text-[10px] sm:text-xs text-gray-500 font-medium -mt-1">
+                <span className="text-[9px] sm:text-[10px] text-gray-300 font-medium -mt-0.5 whitespace-nowrap">
                   Music Hub
                 </span>
               </div>
@@ -75,17 +75,13 @@ export default function Navbar() {
                 <Link 
                   key={link.href}
                   href={link.href} 
-                  className={`relative px-4 py-2 font-semibold transition-all duration-300 rounded-lg group ${
+                  className={`relative px-4 py-2 font-semibold transition-all duration-300 rounded-lg ${
                     pathname === link.href 
-                      ? 'text-blue-600' 
-                      : 'text-gray-700 hover:text-blue-600'
+                      ? 'text-white bg-white/10' 
+                      : 'text-gray-200 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  <span className="relative z-10">{link.label}</span>
-                  {pathname === link.href && (
-                    <div className="absolute inset-0 bg-blue-50 rounded-lg"></div>
-                  )}
-                  <div className="absolute inset-0 bg-linear-to-r from-blue-50 to-purple-50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  {link.label}
                 </Link>
               ))}
               
@@ -95,17 +91,13 @@ export default function Navbar() {
                     <Link 
                       key={link.href}
                       href={link.href} 
-                      className={`relative px-4 py-2 font-semibold transition-all duration-300 rounded-lg group ${
+                      className={`relative px-4 py-2 font-semibold transition-all duration-300 rounded-lg ${
                         pathname === link.href 
-                          ? 'text-blue-600' 
-                          : 'text-gray-700 hover:text-blue-600'
+                          ? 'text-white bg-white/10' 
+                          : 'text-gray-200 hover:text-white hover:bg-white/5'
                       }`}
                     >
-                      <span className="relative z-10">{link.label}</span>
-                      {pathname === link.href && (
-                        <div className="absolute inset-0 bg-blue-50 rounded-lg"></div>
-                      )}
-                      <div className="absolute inset-0 bg-linear-to-r from-blue-50 to-purple-50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      {link.label}
                     </Link>
                   ))}
                 </>
@@ -113,13 +105,13 @@ export default function Navbar() {
                 <>
                   <Link 
                     href="/login" 
-                    className="text-gray-700 hover:text-blue-600 font-semibold px-4 py-2 transition-all duration-300 rounded-lg hover:bg-gray-50"
+                    className="text-gray-200 hover:text-white font-semibold px-4 py-2 transition-all duration-300 rounded-lg hover:bg-white/5"
                   >
                     Login
                   </Link>
                   <Link 
                     href="/signup" 
-                    className="relative ml-2 group"
+                    className="relative ml-2 group overflow-hidden"
                   >
                     <div className="absolute inset-0 bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full blur opacity-50 group-hover:opacity-75 transition-opacity"></div>
                     <div className="relative bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-6 py-2.5 rounded-full font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300">
@@ -130,49 +122,58 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* Mobile Menu Button */}
-            <div className="flex lg:hidden items-center gap-3">
-              {user && (
+            {/* Mobile: Hamburger Menu + Login */}
+            <div className="flex lg:hidden items-center gap-2">
+              {!user && (
                 <Link 
-                  href="/dashboard" 
-                  className="text-gray-700 hover:text-blue-600 font-semibold text-sm"
+                  href="/login" 
+                  className="text-white font-semibold text-sm px-3 py-1.5 hover:bg-white/10 rounded-lg transition-all"
                 >
-                  Dashboard
+                  Login
                 </Link>
               )}
+              
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-sm"
                 aria-label="Toggle menu"
               >
                 {isMobileMenuOpen ? (
-                  <X className="h-6 w-6 text-gray-700" />
+                  <X className="h-5 w-5 text-white" />
                 ) : (
-                  <Menu className="h-6 w-6 text-gray-700" />
+                  <Menu className="h-5 w-5 text-white" />
                 )}
               </button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Full Screen Overlay */}
         <div 
-          className={`lg:hidden transition-all duration-300 ease-in-out ${
+          className={`lg:hidden fixed inset-0 top-14 sm:top-16 z-40 transition-all duration-300 ease-in-out ${
             isMobileMenuOpen 
-              ? 'max-h-screen opacity-100' 
-              : 'max-h-0 opacity-0 overflow-hidden'
+              ? 'opacity-100 pointer-events-auto' 
+              : 'opacity-0 pointer-events-none'
           }`}
         >
-          <div className="px-4 pb-6 space-y-2 bg-white/95 backdrop-blur-xl border-t border-gray-100">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-gray-900/98 backdrop-blur-xl"
+            onClick={() => setIsMobileMenuOpen(false)}
+          ></div>
+          
+          {/* Menu Content */}
+          <div className="relative h-full overflow-y-auto px-4 py-6 space-y-2">
+            {/* Navigation Links */}
             {navLinks.map((link) => (
               <Link 
                 key={link.href}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`block px-4 py-3 font-semibold rounded-lg transition-all ${
+                className={`block px-5 py-4 font-semibold rounded-xl transition-all text-lg ${
                   pathname === link.href 
-                    ? 'bg-linear-to-r from-blue-50 to-purple-50 text-blue-600' 
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-linear-to-r from-blue-600 to-purple-600 text-white shadow-lg' 
+                    : 'text-gray-200 hover:bg-white/10 active:bg-white/20'
                 }`}
               >
                 {link.label}
@@ -186,10 +187,10 @@ export default function Navbar() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`block px-4 py-3 font-semibold rounded-lg transition-all ${
+                    className={`block px-5 py-4 font-semibold rounded-xl transition-all text-lg ${
                       pathname === link.href 
-                        ? 'bg-linear-to-r from-blue-50 to-purple-50 text-blue-600' 
-                        : 'text-gray-700 hover:bg-gray-50'
+                        ? 'bg-linear-to-r from-blue-600 to-purple-600 text-white shadow-lg' 
+                        : 'text-gray-200 hover:bg-white/10 active:bg-white/20'
                     }`}
                   >
                     {link.label}
@@ -198,28 +199,36 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Link 
-                  href="/login"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block px-4 py-3 text-gray-700 hover:bg-gray-50 font-semibold rounded-lg transition-all"
-                >
-                  Login
-                </Link>
-                <Link 
-                  href="/signup"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-4 py-3 rounded-lg font-bold text-center hover:shadow-xl transition-all"
-                >
-                  Get Started
-                </Link>
+                <div className="pt-4 pb-2">
+                  <Link 
+                    href="/signup"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block relative overflow-hidden rounded-xl group"
+                  >
+                    <div className="absolute inset-0 bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 opacity-90"></div>
+                    <div className="relative px-5 py-4 text-center text-white font-bold text-lg">
+                      Sign Up Free
+                    </div>
+                  </Link>
+                </div>
               </>
             )}
+
+            {/* Additional Info */}
+            <div className="pt-8 pb-4 text-center">
+              <p className="text-gray-400 text-sm">
+                Premium Music Education
+              </p>
+              <p className="text-gray-500 text-xs mt-1">
+                Learn from expert instructors
+              </p>
+            </div>
           </div>
         </div>
       </nav>
 
       {/* Spacer to prevent content from going under fixed navbar */}
-      <div className="h-16 sm:h-20"></div>
+      <div className="h-14 sm:h-16 lg:h-20"></div>
     </>
   );
 }
