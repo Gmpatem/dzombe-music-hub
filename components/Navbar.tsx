@@ -52,7 +52,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-14 sm:h-16 lg:h-20">
             {/* Logo - Simplified for mobile */}
-            <Link href="/" className="flex items-center gap-2 group shrink-0">
+            <Link href="/" className="flex items-center gap-2 group flex-shrink-0">
               <div className="relative">
                 <div className="absolute inset-0 bg-linear-to-br from-blue-500 to-purple-600 rounded-lg blur-sm opacity-60 group-hover:opacity-100 transition-opacity"></div>
                 <div className="relative bg-linear-to-br from-blue-500 to-purple-600 p-2 rounded-lg shadow-lg group-hover:shadow-xl transition-all duration-300">
