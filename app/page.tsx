@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { GraduationCap, Music, Users, Clock, Award, BookOpen, Star, ChevronRight, Play, Quote } from 'lucide-react';
-
+import { Music, Users, Clock, Award, BookOpen, Star, ChevronRight, Play, GraduationCap } from 'lucide-react';
 export default function Home() {
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
@@ -68,6 +67,7 @@ export default function Home() {
               className="object-cover object-center"
               priority
               quality={90}
+              sizes="100vw"
             />
             {/* Gradient Overlays for readability */}
             <div className="absolute inset-0 bg-linear-to-r from-black/70 via-black/50 to-transparent"></div>
@@ -156,7 +156,7 @@ export default function Home() {
       <section className="py-12 sm:py-20 bg-linear-to-b from-gray-900 to-gray-800 text-white relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '40px 40px'}}></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle,white_1px,transparent_1px)] bg-size-[40px_40px]"></div>
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -179,6 +179,7 @@ export default function Home() {
                   fill
                   className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
                   quality={85}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
               </div>
@@ -197,6 +198,7 @@ export default function Home() {
                   fill
                   className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
                   quality={85}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
               </div>
@@ -215,6 +217,7 @@ export default function Home() {
                   fill
                   className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
                   quality={85}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
               </div>
@@ -227,9 +230,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section with Background Image */}
+      {/* Features Section */}
       <section className="relative py-16 sm:py-24 overflow-hidden">
-        {/* Background Image - Piano Keys */}
+        {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/images.jpg"
@@ -237,6 +240,7 @@ export default function Home() {
             fill
             className="object-cover opacity-10"
             quality={70}
+            sizes="100vw"
           />
           <div className="absolute inset-0 bg-linear-to-b from-white via-white/95 to-white"></div>
         </div>
@@ -252,7 +256,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {/* Feature Cards with Premium Design */}
+            {/* Feature Cards */}
             <div className="group bg-white/80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-blue-100 hover:shadow-2xl hover:scale-105 transition-all duration-300">
               <div className="bg-linear-to-br from-blue-600 to-purple-600 w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
                 <Music className="h-7 w-7 text-white" />
@@ -343,13 +347,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section - Mobile Optimized */}
+      {/* CTA Section */}
       <section className="py-12 sm:py-20 px-4 bg-gray-900">
         <div className="max-w-5xl mx-auto">
           <div className="relative overflow-hidden bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl p-8 sm:p-12 lg:p-16 text-center text-white shadow-2xl">
             {/* Decorative Elements */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full mix-blend-soft-light filter blur-3xl opacity-10 animate-pulse"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full mix-blend-soft-light filter blur-3xl opacity-10 animate-pulse" style={{animationDelay: '1s'}}></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full mix-blend-soft-light filter blur-3xl opacity-10 [animation-delay:1s] animate-pulse"></div>
 
             <div className="relative z-10">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">

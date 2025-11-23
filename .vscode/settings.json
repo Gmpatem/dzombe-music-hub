@@ -1,0 +1,4 @@
+{
+  "tailwindCSS.lint.suggestCanonicalClasses": false,
+  "tailwindCSS.lint.cssConflict": "warning"
+}
