@@ -14,7 +14,7 @@ export default function Home() {
                 <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
               <span className="text-lg sm:text-xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                D&apos;Zombe
+                D&apos;ZombeMusicHub
               </span>
             </Link>
             
@@ -62,7 +62,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0">
           <div className="relative w-full h-full">
             <Image
-              src="/images/First_pick.jpg"
+              src="/images/First pick.jpg"
               alt="Professional pianist"
               fill
               className="object-cover object-center"
@@ -194,7 +194,7 @@ export default function Home() {
             <div className="group relative overflow-hidden rounded-2xl bg-linear-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-purple-500 transition-all duration-300">
               <div className="relative h-80 overflow-hidden">
                 <Image
-                  src="/images/Second_pic.jpg"
+                  src="/images/Second pic.jpg"
                   alt="Violin instructor"
                   fill
                   className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
