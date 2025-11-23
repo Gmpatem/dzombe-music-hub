@@ -1,27 +1,40 @@
+'use client';
+
 import Link from 'next/link';
-import { GraduationCap, Facebook, Twitter, Instagram, Mail } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { GraduationCap } from 'lucide-react';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+
+  // Don't show footer on auth pages or admin pages
+  if (pathname?.startsWith('/login') || 
+      pathname?.startsWith('/signup') || 
+      pathname?.startsWith('/reset-password') ||
+      pathname?.startsWith('/admin')) {
+    return null;
+  }
 
   return (
-    <footer className="bg-gray-900 text-white mt-auto">
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
+    <footer className="bg-gray-900 text-white py-8 sm:py-12 px-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center sm:text-left grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <GraduationCap className="h-8 w-8 text-blue-400" />
+          <div className="sm:col-span-2 lg:col-span-1">
+            <div className="flex items-center justify-center sm:justify-start gap-2 mb-4">
+              <div className="bg-gradient-to-br from-blue-600 to-purple-600 p-2 rounded-lg">
+                <GraduationCap className="h-6 w-6 text-white" />
+              </div>
               <span className="text-xl font-bold">D&apos;Zombe Music Hub</span>
             </div>
-            <p className="text-gray-400 text-sm">
-              Empowering musicians through quality education and accessible learning.
+            <p className="text-gray-400 text-sm max-w-xs mx-auto sm:mx-0">
+              Empowering musicians through quality online education
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-semibold mb-4">Quick Links</h3>
+            <h4 className="font-semibold mb-4 text-base">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/programs" className="text-gray-400 hover:text-white transition">
@@ -30,7 +43,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/enrollment" className="text-gray-400 hover:text-white transition">
-                  Enroll Now
+                  Enroll
                 </Link>
               </li>
               <li>
@@ -38,9 +51,26 @@ export default function Footer() {
                   Dashboard
                 </Link>
               </li>
+            </ul>
+          </div>
+
+          {/* Account */}
+          <div>
+            <h4 className="font-semibold mb-4 text-base">Account</h4>
+            <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/my-courses" className="text-gray-400 hover:text-white transition">
-                  My Courses
+                <Link href="/login" className="text-gray-400 hover:text-white transition">
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link href="/signup" className="text-gray-400 hover:text-white transition">
+                  Sign Up
+                </Link>
+              </li>
+              <li>
+                <Link href="/profile" className="text-gray-400 hover:text-white transition">
+                  Profile
                 </Link>
               </li>
             </ul>
@@ -48,56 +78,30 @@ export default function Footer() {
 
           {/* Support */}
           <div>
-            <h3 className="font-semibold mb-4">Support</h3>
+            <h4 className="font-semibold mb-4 text-base">Support</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/profile" className="text-gray-400 hover:text-white transition">
-                  My Profile
-                </Link>
-              </li>
-              <li>
-                <Link href="/reset-password" className="text-gray-400 hover:text-white transition">
-                  Reset Password
-                </Link>
-              </li>
-              <li>
-                <a href="mailto:support@dzombemusichub.com" className="text-gray-400 hover:text-white transition">
-                  Contact Support
+                <a 
+                  href="mailto:support@dzombemusic.com" 
+                  className="text-gray-400 hover:text-white transition"
+                >
+                  Contact Us
                 </a>
               </li>
               <li>
-                <Link href="#" className="text-gray-400 hover:text-white transition">
-                  FAQ
+                <Link 
+                  href="/reset-password" 
+                  className="text-gray-400 hover:text-white transition"
+                >
+                  Reset Password
                 </Link>
               </li>
             </ul>
           </div>
-
-          {/* Contact */}
-          <div>
-            <h3 className="font-semibold mb-4">Connect With Us</h3>
-            <div className="flex gap-4 mb-4">
-              <a href="#" className="text-gray-400 hover:text-white transition">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition">
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition">
-                <Instagram className="h-5 w-5" />
-              </a>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-gray-400">
-              <Mail className="h-4 w-4" />
-              <a href="mailto:info@dzombemusichub.com" className="hover:text-white transition">
-                info@dzombemusichub.com
-              </a>
-            </div>
-          </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
-          <p>&copy; {currentYear} D&apos;Zombe Music Hub. All rights reserved.</p>
+        <div className="border-t border-gray-800 pt-6 text-center text-sm text-gray-400">
+          <p>© {new Date().getFullYear()} D&apos;Zombe Music Hub. All rights reserved.</p>
         </div>
       </div>
     </footer>

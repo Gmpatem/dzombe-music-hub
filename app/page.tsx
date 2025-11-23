@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { GraduationCap, Music, Users, Clock, Award, BookOpen, Star, ChevronRight, Play, Quote } from 'lucide-react';
+import { Music, Users, Clock, Award, BookOpen, Star, ChevronRight, Play } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -10,10 +10,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 sm:h-20">
             <Link href="/" className="flex items-center gap-2 sm:gap-3">
-              <div className="bg-linear-to-br from-blue-600 to-purple-600 p-2 rounded-lg shadow-lg">
+              <div className="bg-gradient-to-br from-blue-600 to-purple-600 p-2 rounded-lg shadow-lg">
                 <GraduationCap className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
-              <span className="text-lg sm:text-xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 D&apos;Zombe
               </span>
             </Link>
@@ -31,7 +31,7 @@ export default function Home() {
               </Link>
               <Link 
                 href="/signup" 
-                className="bg-linear-to-r from-blue-600 to-purple-600 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
                 Get Started
               </Link>
@@ -47,7 +47,7 @@ export default function Home() {
               </Link>
               <Link 
                 href="/signup" 
-                className="bg-linear-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full font-semibold text-sm hover:shadow-lg transition-all"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full font-semibold text-sm hover:shadow-lg transition-all"
               >
                 Sign Up
               </Link>
@@ -68,6 +68,7 @@ export default function Home() {
               className="object-cover object-center"
               priority
               quality={90}
+              sizes="100vw"
             />
             {/* Gradient Overlays for readability */}
             <div className="absolute inset-0 bg-linear-to-r from-black/70 via-black/50 to-transparent"></div>
@@ -156,7 +157,7 @@ export default function Home() {
       <section className="py-12 sm:py-20 bg-linear-to-b from-gray-900 to-gray-800 text-white relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '40px 40px'}}></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle,white_1px,transparent_1px)] bg-[length:40px_40px]"></div>
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -171,7 +172,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {/* Instructor Card 1 - Pianist in Pink */}
-            <div className="group relative overflow-hidden rounded-2xl bg-linear-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-blue-500 transition-all duration-300">
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-blue-500 transition-all duration-300">
               <div className="relative h-80 overflow-hidden">
                 <Image
                   src="/images/third_pic_.jpg"
@@ -179,6 +180,7 @@ export default function Home() {
                   fill
                   className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
                   quality={85}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
               </div>
@@ -189,7 +191,7 @@ export default function Home() {
             </div>
 
             {/* Instructor Card 2 - Violinist */}
-            <div className="group relative overflow-hidden rounded-2xl bg-linear-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-purple-500 transition-all duration-300">
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-purple-500 transition-all duration-300">
               <div className="relative h-80 overflow-hidden">
                 <Image
                   src="/images/Second_pic.jpg"
@@ -197,6 +199,7 @@ export default function Home() {
                   fill
                   className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
                   quality={85}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
               </div>
@@ -207,7 +210,7 @@ export default function Home() {
             </div>
 
             {/* Instructor Card 3 - Performance */}
-            <div className="group relative overflow-hidden rounded-2xl bg-linear-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-pink-500 transition-all duration-300 md:col-span-2 lg:col-span-1">
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-pink-500 transition-all duration-300 md:col-span-2 lg:col-span-1">
               <div className="relative h-80 overflow-hidden">
                 <Image
                   src="/images/FB_IMG_1760189938791.jpg"
@@ -215,6 +218,7 @@ export default function Home() {
                   fill
                   className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
                   quality={85}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
               </div>
@@ -227,9 +231,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section with Background Image */}
+      {/* Features Section */}
       <section className="relative py-16 sm:py-24 overflow-hidden">
-        {/* Background Image - Piano Keys */}
+        {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/images.jpg"
@@ -237,6 +241,7 @@ export default function Home() {
             fill
             className="object-cover opacity-10"
             quality={70}
+            sizes="100vw"
           />
           <div className="absolute inset-0 bg-linear-to-b from-white via-white/95 to-white"></div>
         </div>
@@ -252,7 +257,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {/* Feature Cards with Premium Design */}
+            {/* Feature Cards */}
             <div className="group bg-white/80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-blue-100 hover:shadow-2xl hover:scale-105 transition-all duration-300">
               <div className="bg-linear-to-br from-blue-600 to-purple-600 w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg">
                 <Music className="h-7 w-7 text-white" />
@@ -343,13 +348,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section - Mobile Optimized */}
+      {/* CTA Section */}
       <section className="py-12 sm:py-20 px-4 bg-gray-900">
         <div className="max-w-5xl mx-auto">
-          <div className="relative overflow-hidden bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl p-8 sm:p-12 lg:p-16 text-center text-white shadow-2xl">
+          <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-3xl p-8 sm:p-12 lg:p-16 text-center text-white shadow-2xl">
             {/* Decorative Elements */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full mix-blend-soft-light filter blur-3xl opacity-10 animate-pulse"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full mix-blend-soft-light filter blur-3xl opacity-10 animate-pulse" style={{animationDelay: '1s'}}></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full mix-blend-soft-light filter blur-3xl opacity-10 [animation-delay:1s] animate-pulse"></div>
 
             <div className="relative z-10">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
@@ -377,7 +382,7 @@ export default function Home() {
             {/* Brand */}
             <div className="sm:col-span-2 lg:col-span-1">
               <div className="flex items-center justify-center sm:justify-start gap-2 mb-4">
-                <div className="bg-linear-to-br from-blue-600 to-purple-600 p-2 rounded-lg">
+                <div className="bg-gradient-to-br from-blue-600 to-purple-600 p-2 rounded-lg">
                   <GraduationCap className="h-6 w-6 text-white" />
                 </div>
                 <span className="text-xl font-bold">D&apos;Zombe Music Hub</span>

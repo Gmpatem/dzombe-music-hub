@@ -66,10 +66,6 @@ export default function AdminProgramsPage() {
     }
   }, [user, userProfile, loading, router]);
 
-  useEffect(() => {
-    fetchPrograms();
-  }, [user, userProfile]);
-
   const fetchPrograms = async () => {
     if (!user || userProfile?.role !== 'admin') return;
 
@@ -104,6 +100,11 @@ export default function AdminProgramsPage() {
       setLoadingData(false);
     }
   };
+
+  useEffect(() => {
+    fetchPrograms();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, userProfile]);
 
   useEffect(() => {
     if (searchTerm) {
@@ -183,11 +184,9 @@ export default function AdminProgramsPage() {
       };
 
       if (editingProgram) {
-        // Update existing program
         await updateDoc(doc(db, 'programs', editingProgram.id), programData);
         toast.success('Program updated successfully!');
       } else {
-        // Add new program
         await addDoc(collection(db, 'programs'), {
           ...programData,
           createdAt: new Date(),
@@ -238,6 +237,7 @@ export default function AdminProgramsPage() {
       toast.success('Logged out successfully');
       router.push('/');
     } catch (error) {
+      console.error('Error logging out:', error);
       toast.error('Failed to logout');
     }
   };
@@ -276,6 +276,8 @@ export default function AdminProgramsPage() {
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 hover:text-red-400 font-medium"
+                aria-label="Logout from admin dashboard"
+                title="Logout"
               >
                 <LogOut className="h-4 w-4" />
                 Logout
@@ -295,6 +297,8 @@ export default function AdminProgramsPage() {
           <button
             onClick={() => openModal()}
             className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+            aria-label="Add new program"
+            title="Add new program"
           >
             <Plus className="h-5 w-5" />
             Add Program
@@ -311,6 +315,7 @@ export default function AdminProgramsPage() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              aria-label="Search programs"
             />
           </div>
         </div>
@@ -327,6 +332,8 @@ export default function AdminProgramsPage() {
             <button
               onClick={() => openModal()}
               className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700"
+              aria-label="Add your first program"
+              title="Add your first program"
             >
               Add Your First Program
             </button>
@@ -345,6 +352,8 @@ export default function AdminProgramsPage() {
                   <button
                     onClick={() => togglePublish(program.id, program.isPublished)}
                     className="text-gray-400 hover:text-gray-600"
+                    aria-label={program.isPublished ? `Unpublish ${program.name}` : `Publish ${program.name}`}
+                    title={program.isPublished ? "Unpublish program" : "Publish program"}
                   >
                     {program.isPublished ? (
                       <Eye className="h-5 w-5" />
@@ -385,6 +394,8 @@ export default function AdminProgramsPage() {
                   <button
                     onClick={() => openModal(program)}
                     className="flex-1 flex items-center justify-center gap-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition text-sm font-semibold"
+                    aria-label={`Edit ${program.name}`}
+                    title="Edit program"
                   >
                     <Edit2 className="h-4 w-4" />
                     Edit
@@ -392,6 +403,8 @@ export default function AdminProgramsPage() {
                   <button
                     onClick={() => handleDelete(program.id, program.name)}
                     className="flex items-center justify-center gap-2 bg-red-50 text-red-600 px-4 py-2 rounded-lg hover:bg-red-100 transition text-sm font-semibold"
+                    aria-label={`Delete ${program.name}`}
+                    title="Delete program"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -414,7 +427,12 @@ export default function AdminProgramsPage() {
               <h2 className="text-2xl font-bold">
                 {editingProgram ? 'Edit Program' : 'Add New Program'}
               </h2>
-              <button onClick={closeModal} className="text-gray-400 hover:text-gray-600">
+              <button 
+                onClick={closeModal} 
+                className="text-gray-400 hover:text-gray-600"
+                aria-label="Close modal"
+                title="Close modal"
+              >
                 <X className="h-6 w-6" />
               </button>
             </div>
@@ -431,6 +449,7 @@ export default function AdminProgramsPage() {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   placeholder="e.g., Guitar Fundamentals"
                   required
+                  aria-label="Program name"
                 />
               </div>
 
@@ -444,6 +463,7 @@ export default function AdminProgramsPage() {
                   rows={3}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   placeholder="Brief description of the program..."
+                  aria-label="Program description"
                 />
               </div>
 
@@ -459,6 +479,7 @@ export default function AdminProgramsPage() {
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                     placeholder="5000"
                     required
+                    aria-label="Program price"
                   />
                 </div>
 
@@ -470,6 +491,8 @@ export default function AdminProgramsPage() {
                     value={formData.currency}
                     onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    aria-label="Select currency"
+                    title="Select currency"
                   >
                     <option value="₱">₱ (PHP)</option>
                     <option value="$">$ (USD)</option>
@@ -490,6 +513,7 @@ export default function AdminProgramsPage() {
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                     placeholder="e.g., 8 weeks"
                     required
+                    aria-label="Program duration"
                   />
                 </div>
 
@@ -501,6 +525,8 @@ export default function AdminProgramsPage() {
                     value={formData.level}
                     onChange={(e) => setFormData({ ...formData, level: e.target.value })}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    aria-label="Select program level"
+                    title="Select program level"
                   >
                     <option value="Beginner">Beginner</option>
                     <option value="Intermediate">Intermediate</option>
@@ -520,6 +546,7 @@ export default function AdminProgramsPage() {
                   onChange={(e) => setFormData({ ...formData, instructor: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   placeholder="Instructor name"
+                  aria-label="Instructor name"
                 />
               </div>
 
@@ -530,6 +557,7 @@ export default function AdminProgramsPage() {
                   checked={formData.isPublished}
                   onChange={(e) => setFormData({ ...formData, isPublished: e.target.checked })}
                   className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                  aria-label="Publish program"
                 />
                 <label htmlFor="isPublished" className="text-sm font-medium text-gray-700">
                   Publish program (visible to students)
@@ -541,12 +569,14 @@ export default function AdminProgramsPage() {
                   type="button"
                   onClick={closeModal}
                   className="flex-1 px-6 py-3 border border-gray-300 rounded-lg font-semibold hover:bg-gray-50 transition"
+                  aria-label="Cancel"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
+                  aria-label={editingProgram ? 'Update program' : 'Add program'}
                 >
                   {editingProgram ? 'Update Program' : 'Add Program'}
                 </button>
