@@ -1,4 +1,3 @@
 {
-  "tailwindCSS.lint.suggestCanonicalClasses": false,
-  "tailwindCSS.lint.cssConflict": "warning"
+  "edge-devtools.webhint": false
 }
