@@ -147,7 +147,41 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">{/* Profile Content */}
+    <div className="min-h-screen bg-gray-50">
+      {/* Navigation */}
+      <nav className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <Link href="/" className="flex items-center gap-2">
+              <GraduationCap className="h-8 w-8 text-blue-600" />
+              <span className="text-xl font-bold text-gray-900">D&apos;Zombe Music Hub</span>
+            </Link>
+            <div className="flex items-center gap-6">
+              <Link href="/dashboard" className="text-gray-700 hover:text-blue-600 font-medium">
+                Dashboard
+              </Link>
+              <Link href="/my-courses" className="text-gray-700 hover:text-blue-600 font-medium">
+                My Courses
+              </Link>
+              <Link href="/programs" className="text-gray-700 hover:text-blue-600 font-medium">
+                Browse
+              </Link>
+              <Link href="/profile" className="text-blue-600 font-medium">
+                Profile
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 text-gray-700 hover:text-red-600 font-medium"
+              >
+                <LogOut className="h-4 w-4" />
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Profile Content */}
       <div className="max-w-3xl mx-auto px-4 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">My Profile</h1>

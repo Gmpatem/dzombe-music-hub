@@ -129,7 +129,32 @@ export default function EnrollmentPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Toaster position="top-center" richColors />{/* Header */}
+      <Toaster position="top-center" richColors />
+      
+      {/* Navigation */}
+      <nav className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <Link href="/" className="flex items-center gap-2">
+              <GraduationCap className="h-8 w-8 text-blue-600" />
+              <span className="text-xl font-bold text-gray-900">D&apos;Zombe Music Hub</span>
+            </Link>
+            <div className="flex gap-6">
+              <Link href="/" className="text-gray-700 hover:text-blue-600 font-medium">
+                Home
+              </Link>
+              <Link href="/programs" className="text-gray-700 hover:text-blue-600 font-medium">
+                Programs
+              </Link>
+              <Link href="/enrollment" className="text-blue-600 font-medium">
+                Enroll
+              </Link>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Header */}
       <div className="bg-blue-600 text-white py-16 px-4">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">

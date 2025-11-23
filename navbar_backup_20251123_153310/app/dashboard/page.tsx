@@ -93,7 +93,44 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">{/* Dashboard Content */}
+    <div className="min-h-screen bg-gray-50">
+      {/* Navigation */}
+      <nav className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <Link href="/" className="flex items-center gap-2">
+              <GraduationCap className="h-8 w-8 text-blue-600" />
+              <span className="text-xl font-bold text-gray-900">D&apos;Zombe Music Hub</span>
+            </Link>
+            <div className="flex items-center gap-6">
+              <Link href="/" className="text-gray-700 hover:text-blue-600 font-medium">
+                Home
+              </Link>
+              <Link href="/programs" className="text-gray-700 hover:text-blue-600 font-medium">
+                Programs
+              </Link>
+              <Link href="/dashboard" className="text-blue-600 font-medium">
+                Dashboard
+              </Link>
+              <Link href="/my-courses" className="text-gray-700 hover:text-blue-600 font-medium">
+                My Courses
+              </Link>
+              <Link href="/profile" className="text-gray-700 hover:text-blue-600 font-medium">
+                Profile
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 text-gray-700 hover:text-red-600 font-medium"
+              >
+                <LogOut className="h-4 w-4" />
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Dashboard Content */}
       <div className="max-w-7xl mx-auto px-4 py-12">
         {/* Welcome Section */}
         <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl p-8 text-white mb-8">
