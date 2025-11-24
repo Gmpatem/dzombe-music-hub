@@ -8,10 +8,8 @@ export default function Footer() {
   const pathname = usePathname();
 
   // Don't show footer on auth pages or admin pages
-  if (pathname?.startsWith('/login') || 
-      pathname?.startsWith('/signup') || 
-      pathname?.startsWith('/reset-password') ||
-      pathname?.startsWith('/admin')) {
+  if (pathname?.startsWith('/auth') || 
+      pathname?.startsWith('/dashboard/admin')) {
     return null;
   }
 
@@ -42,11 +40,6 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/enrollment" className="text-gray-400 hover:text-white transition">
-                  Enroll
-                </Link>
-              </li>
-              <li>
                 <Link href="/dashboard" className="text-gray-400 hover:text-white transition">
                   Dashboard
                 </Link>
@@ -59,12 +52,12 @@ export default function Footer() {
             <h4 className="font-semibold mb-4 text-base">Account</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/login" className="text-gray-400 hover:text-white transition">
-                  Login
+                <Link href="/auth?tab=signin" className="text-gray-400 hover:text-white transition">
+                  Sign In
                 </Link>
               </li>
               <li>
-                <Link href="/signup" className="text-gray-400 hover:text-white transition">
+                <Link href="/auth?tab=signup" className="text-gray-400 hover:text-white transition">
                   Sign Up
                 </Link>
               </li>
@@ -90,7 +83,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link 
-                  href="/reset-password" 
+                  href="/auth?tab=signin" 
                   className="text-gray-400 hover:text-white transition"
                 >
                   Reset Password

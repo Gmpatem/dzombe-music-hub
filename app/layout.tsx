@@ -5,6 +5,7 @@ import { AuthProvider } from "@/lib/context/AuthContext";
 import { Toaster } from "sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SessionTimeoutWarning from "@/components/SessionTimeoutWarning";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
       >
         <AuthProvider>
           <Navbar />
+          <SessionTimeoutWarning />
           <Toaster position="top-center" richColors />
           {children}
           <Footer />
