@@ -9,6 +9,7 @@ import { toast, Toaster } from 'sonner';
 import { doc, getDoc, setDoc, collection, addDoc, getDocs, query, where, Timestamp } from 'firebase/firestore';
 import { db, auth } from '@/lib/firebase/config';
 import { Program } from '@/types/program';
+import EnrollmentSuccessModal from '@/components/EnrollmentSuccessModal';
 
 export default function AuthPage() {
   const { login, signup } = useAuth();
@@ -19,6 +20,8 @@ export default function AuthPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [programs, setPrograms] = useState<Program[]>([]);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [enrolledProgram, setEnrolledProgram] = useState<string>('');
   
   // Sign In form data
   const [signinData, setSigninData] = useState({
@@ -171,10 +174,9 @@ export default function AuthPage() {
         createdAt: Timestamp.now(),
       });
 
-      toast.success('Account created and enrolled successfully!');
-      
-      // Redirect to student dashboard
-      router.push('/dashboard');
+      // Show success modal instead of immediate redirect
+      setEnrolledProgram(selectedProgram?.name || 'your chosen program');
+      setShowSuccessModal(true);
       
     } catch (error) {
       console.error('Signup error:', error);
@@ -186,70 +188,64 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4">
       <Toaster position="top-center" richColors />
       
       <div className="w-full max-w-5xl">
         {/* Logo */}
-        <Link href="/" className="flex items-center justify-center gap-3 mb-8 group">
-          <div className="relative">
-            <div className="absolute inset-0 bg-linear-to-br from-blue-500 to-purple-600 rounded-lg blur-md opacity-50 group-hover:opacity-100 transition-opacity"></div>
-            <div className="relative bg-linear-to-br from-blue-500 to-purple-600 p-3 rounded-lg shadow-lg">
+        <div className="text-center mb-8">
+          <Link href="/" className="inline-flex items-center gap-3 group">
+            <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-3 rounded-xl">
               <GraduationCap className="h-8 w-8 text-white" />
             </div>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-2xl font-bold text-white tracking-tight">
-              D&apos;Zombe
-            </span>
-            <span className="text-xs text-blue-200 font-semibold -mt-1 tracking-wider">
-              MUSIC HUB
-            </span>
-          </div>
-        </Link>
+            <div className="text-left">
+              <h1 className="text-2xl font-bold text-white">D&apos;Zombe Music Hub</h1>
+              <p className="text-sm text-gray-400">Start Your Musical Journey</p>
+            </div>
+          </Link>
+        </div>
 
         {/* Main Card */}
-        <div className="bg-gray-800/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-700/50 overflow-hidden">
-          {/* Tab Headers */}
-          <div className="flex border-b border-gray-700/50">
+        <div className="bg-gray-800/50 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
+          
+          {/* Tabs */}
+          <div className="flex border-b border-gray-700">
             <button
               onClick={() => setActiveTab('signin')}
-              className={`flex-1 py-4 px-6 font-semibold text-lg transition-all relative ${
+              className={`flex-1 px-6 py-4 font-semibold transition-all ${
                 activeTab === 'signin'
-                  ? 'text-white bg-linear-to-r from-blue-600/20 to-purple-600/20'
-                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
               }`}
             >
-              <LogIn className="inline-block w-5 h-5 mr-2" />
-              Sign In
-              {activeTab === 'signin' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-blue-600 to-purple-600"></div>
-              )}
+              <div className="flex items-center justify-center gap-2">
+                <LogIn className="h-5 w-5" />
+                <span>Sign In</span>
+              </div>
             </button>
             <button
               onClick={() => setActiveTab('signup')}
-              className={`flex-1 py-4 px-6 font-semibold text-lg transition-all relative ${
+              className={`flex-1 px-6 py-4 font-semibold transition-all ${
                 activeTab === 'signup'
-                  ? 'text-white bg-linear-to-r from-blue-600/20 to-purple-600/20'
-                  : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
               }`}
             >
-              <UserPlus className="inline-block w-5 h-5 mr-2" />
-              Sign Up + Enroll
-              {activeTab === 'signup' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-blue-600 to-purple-600"></div>
-              )}
+              <div className="flex items-center justify-center gap-2">
+                <UserPlus className="h-5 w-5" />
+                <span>Sign Up & Enroll</span>
+              </div>
             </button>
           </div>
 
-          {/* Tab Content */}
-          <div className="p-8">
-            {/* SIGN IN TAB */}
-            {activeTab === 'signin' && (
+          {/* Forms Container */}
+          <div className="p-6 sm:p-8">
+            {activeTab === 'signin' ? (
+              /* SIGN IN FORM */
               <form onSubmit={handleSignIn} className="space-y-6 max-w-md mx-auto">
-                <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold text-white mb-2">Welcome Back</h2>
-                  <p className="text-gray-400">Sign in to continue your musical journey</p>
+                <div className="text-center mb-6">
+                  <h2 className="text-2xl font-bold text-white mb-2">Welcome Back!</h2>
+                  <p className="text-gray-400 text-sm">Sign in to access your dashboard</p>
                 </div>
 
                 {/* Email */}
@@ -297,7 +293,7 @@ export default function AuthPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-linear-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-bold text-lg hover:shadow-lg hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-bold text-lg hover:shadow-lg hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   {loading ? 'Signing In...' : 'Sign In'}
                 </button>
@@ -310,18 +306,16 @@ export default function AuthPage() {
                     onClick={() => setActiveTab('signup')}
                     className="text-blue-400 hover:text-blue-300 font-semibold"
                   >
-                    Sign Up Now
+                    Sign Up & Enroll
                   </button>
                 </p>
               </form>
-            )}
-
-            {/* SIGN UP + ENROLL TAB */}
-            {activeTab === 'signup' && (
+            ) : (
+              /* SIGN UP & ENROLL FORM */
               <form onSubmit={handleSignUpAndEnroll} className="space-y-6">
-                <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold text-white mb-2">Start Your Journey</h2>
-                  <p className="text-gray-400">Create an account and enroll in a program</p>
+                <div className="text-center mb-6">
+                  <h2 className="text-2xl font-bold text-white mb-2">Create Account & Enroll</h2>
+                  <p className="text-gray-400 text-sm">Start your musical journey today</p>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
@@ -480,7 +474,7 @@ export default function AuthPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-linear-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-bold text-lg hover:shadow-lg hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg font-bold text-lg hover:shadow-lg hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
                   {loading ? 'Creating Account...' : 'Create Account & Enroll'}
                 </button>
@@ -511,6 +505,16 @@ export default function AuthPage() {
           </Link>
         </div>
       </div>
+
+      {/* Success Modal */}
+      <EnrollmentSuccessModal 
+        isOpen={showSuccessModal}
+        programName={enrolledProgram}
+        onClose={() => {
+          setShowSuccessModal(false);
+          router.push('/dashboard');
+        }}
+      />
     </div>
   );
 }
