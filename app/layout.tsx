@@ -1,0 +1,45 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { AuthProvider } from "@/lib/context/AuthContext";
+import { Toaster } from "sonner";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import SessionTimeoutWarning from "@/components/SessionTimeoutWarning";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "D'Zombe Music Hub - Online Music School",
+  description: "Learn music online with expert instructors",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <AuthProvider>
+          <Navbar />
+          <SessionTimeoutWarning />
+          <Toaster position="top-center" richColors />
+          {children}
+          <Footer />
+        </AuthProvider>
+      </body>
+    </html>
+  );
+}
