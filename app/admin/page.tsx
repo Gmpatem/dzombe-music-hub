@@ -104,15 +104,14 @@ export default function AdminDashboardPage() {
   }, [user, userProfile]);
 
   const handleLogout = async () => {
-    try {
-      await logout();
-      toast.success('Logged out successfully');
-      router.push('/');
-    } catch (error) {
-      toast.error('Failed to logout');
-    }
-  };
-
+  try {
+    await logout();
+    toast.success('Logged out successfully');
+    window.location.href = '/auth';  // ✅ Hard redirect (clears cache)
+  } catch (error) {
+    toast.error('Failed to logout');
+  }
+};
   if (loading || !user || !userProfile || userProfile.role !== 'admin') {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">

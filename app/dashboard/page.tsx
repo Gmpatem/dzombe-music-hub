@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/context/AuthContext';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { 
   BookOpen, 
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase/config';
+import { toast } from 'sonner';
 
 interface Enrollment {
   id: string;
@@ -24,9 +26,26 @@ interface Enrollment {
 }
 
 export default function DashboardOverviewPage() {
-  const { userProfile } = useAuth();
+  const { user, userProfile, loading } = useAuth();
+  const router = useRouter();
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingData, setLoadingData] = useState(true);
+
+  // ✅ ADDED: Protect route - redirect if not logged in or if admin
+  useEffect(() => {
+    if (!loading && !user) {
+      toast.error('Please login to access dashboard');
+      router.push('/auth');
+      return;
+    }
+
+    // ✅ ADDED: Redirect admins to admin dashboard
+    if (!loading && userProfile && userProfile.role === 'admin') {
+      toast.info('Redirecting to admin dashboard');
+      router.push('/admin');
+      return;
+    }
+  }, [user, userProfile, loading, router]);
 
   // Fetch enrollments
   useEffect(() => {
@@ -56,7 +75,7 @@ export default function DashboardOverviewPage() {
       } catch (error) {
         console.error('Error fetching enrollments:', error);
       } finally {
-        setLoading(false);
+        setLoadingData(false);
       }
     }
 
@@ -80,6 +99,23 @@ export default function DashboardOverviewPage() {
 
   // Get first name from fullName
   const firstName = userProfile?.fullName?.split(' ')[0] || 'Student';
+
+  // ✅ ADDED: Show loading state while checking auth
+  if (loading || !user || !userProfile) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // ✅ ADDED: Don't render if admin (will redirect)
+  if (userProfile.role === 'admin') {
+    return null;
+  }
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
@@ -155,7 +191,7 @@ export default function DashboardOverviewPage() {
               </Link>
             </div>
 
-            {loading ? (
+            {loadingData ? (
               <div className="text-center py-8">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
               </div>
