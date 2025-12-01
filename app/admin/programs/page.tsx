@@ -2,14 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/context/AuthContext';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { 
-  GraduationCap, 
   Plus, 
   Edit2, 
   Trash2, 
-  LogOut, 
   Search,
   Eye,
   EyeOff,
@@ -33,8 +29,7 @@ interface Program {
 }
 
 export default function AdminProgramsPage() {
-  const { user, userProfile, logout, loading } = useAuth();
-  const router = useRouter();
+  const { user, userProfile } = useAuth();
   const [programs, setPrograms] = useState<Program[]>([]);
   const [filteredPrograms, setFilteredPrograms] = useState<Program[]>([]);
   const [loadingData, setLoadingData] = useState(true);
@@ -51,20 +46,6 @@ export default function AdminProgramsPage() {
     instructor: '',
     isPublished: true,
   });
-
-  useEffect(() => {
-    if (!loading && !user) {
-      toast.error('Please login to access admin dashboard');
-      router.push('/login');
-      return;
-    }
-
-    if (!loading && userProfile && userProfile.role !== 'admin') {
-      toast.error('Access denied. Admin privileges required.');
-      router.push('/dashboard');
-      return;
-    }
-  }, [user, userProfile, loading, router]);
 
   const fetchPrograms = async () => {
     if (!user || userProfile?.role !== 'admin') return;
@@ -221,9 +202,8 @@ export default function AdminProgramsPage() {
     try {
       await updateDoc(doc(db, 'programs', programId), {
         isPublished: !currentStatus,
-        updatedAt: new Date(),
       });
-      toast.success(`Program ${!currentStatus ? 'published' : 'unpublished'} successfully!`);
+      toast.success(currentStatus ? 'Program unpublished' : 'Program published');
       fetchPrograms();
     } catch (error) {
       console.error('Error toggling publish status:', error);
@@ -231,200 +211,167 @@ export default function AdminProgramsPage() {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-      toast.success('Logged out successfully');
-      router.push('/');
-    } catch (error) {
-      console.error('Error logging out:', error);
-      toast.error('Failed to logout');
-    }
+  const stats = {
+    total: programs.length,
+    published: programs.filter(p => p.isPublished).length,
+    unpublished: programs.filter(p => !p.isPublished).length,
   };
 
-  if (loading || !user || !userProfile || userProfile.role !== 'admin') {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Admin Navigation */}
-      <nav className="bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-2">
-              <GraduationCap className="h-8 w-8 text-blue-400" />
-              <span className="text-xl font-bold">Admin Dashboard</span>
-            </div>
-            <div className="flex items-center gap-6">
-              <Link href="/admin" className="hover:text-blue-400 font-medium">
-                Overview
-              </Link>
-              <Link href="/admin/enrollments" className="hover:text-blue-400 font-medium">
-                Enrollments
-              </Link>
-              <Link href="/admin/students" className="hover:text-blue-400 font-medium">
-                Students
-              </Link>
-              <Link href="/admin/programs" className="text-blue-400 font-medium">
-                Programs
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-2 hover:text-red-400 font-medium"
-                aria-label="Logout from admin dashboard"
-                title="Logout"
-              >
-                <LogOut className="h-4 w-4" />
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div>
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Programs</h1>
+        <p className="text-gray-600">Manage your music programs and courses</p>
+      </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Manage Programs</h1>
-            <p className="text-gray-600">Add, edit, or remove music programs</p>
+      {/* Stats */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+        <div className="bg-white rounded-lg shadow p-4 sm:p-6">
+          <p className="text-sm text-gray-600 mb-1">Total Programs</p>
+          <p className="text-2xl sm:text-3xl font-bold">{stats.total}</p>
+        </div>
+        <div className="bg-green-50 rounded-lg shadow p-4 sm:p-6">
+          <p className="text-sm text-green-800 mb-1">Published</p>
+          <p className="text-2xl sm:text-3xl font-bold text-green-900">{stats.published}</p>
+        </div>
+        <div className="bg-gray-50 rounded-lg shadow p-4 sm:p-6 col-span-2 sm:col-span-1">
+          <p className="text-sm text-gray-600 mb-1">Unpublished</p>
+          <p className="text-2xl sm:text-3xl font-bold">{stats.unpublished}</p>
+        </div>
+      </div>
+
+      {/* Search and Add */}
+      <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 mb-6">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search programs or instructors..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
           </div>
           <button
             onClick={() => openModal()}
-            className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
-            aria-label="Add new program"
-            title="Add new program"
+            className="flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition whitespace-nowrap"
           >
             <Plus className="h-5 w-5" />
             Add Program
           </button>
         </div>
+      </div>
 
-        {/* Search */}
-        <div className="bg-white rounded-xl shadow-md p-6 mb-6">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search programs by name or instructor..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              aria-label="Search programs"
-            />
-          </div>
+      {/* Programs Grid */}
+      {loadingData ? (
+        <div className="text-center py-12">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
         </div>
-
-        {/* Programs Grid */}
-        {loadingData ? (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-          </div>
-        ) : filteredPrograms.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-md p-12 text-center">
-            <GraduationCap className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-600 mb-4">No programs found</p>
-            <button
-              onClick={() => openModal()}
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700"
-              aria-label="Add your first program"
-              title="Add your first program"
+      ) : filteredPrograms.length === 0 ? (
+        <div className="bg-white rounded-xl shadow-md p-12 text-center">
+          <Plus className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+          <p className="text-gray-600 mb-4">No programs found</p>
+          <button
+            onClick={() => openModal()}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+          >
+            Add Your First Program
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {filteredPrograms.map((program) => (
+            <div
+              key={program.id}
+              className={`bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition ${
+                !program.isPublished ? 'opacity-60' : ''
+              }`}
             >
-              Add Your First Program
-            </button>
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPrograms.map((program) => (
-              <div
-                key={program.id}
-                className={`bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition ${
-                  !program.isPublished ? 'opacity-60' : ''
-                }`}
-              >
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-bold text-gray-900">{program.name}</h3>
-                  <button
-                    onClick={() => togglePublish(program.id, program.isPublished)}
-                    className="text-gray-400 hover:text-gray-600"
-                    aria-label={program.isPublished ? `Unpublish ${program.name}` : `Publish ${program.name}`}
-                    title={program.isPublished ? "Unpublish program" : "Publish program"}
-                  >
-                    {program.isPublished ? (
-                      <Eye className="h-5 w-5" />
-                    ) : (
-                      <EyeOff className="h-5 w-5" />
-                    )}
-                  </button>
-                </div>
-
-                <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                  {program.description}
-                </p>
-
-                <div className="space-y-2 text-sm mb-4">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Price:</span>
-                    <span className="font-semibold text-blue-600">
-                      {program.currency}{program.price}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Duration:</span>
-                    <span className="font-semibold">{program.duration}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Level:</span>
-                    <span className="font-semibold">{program.level}</span>
-                  </div>
-                  {program.instructor && (
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Instructor:</span>
-                      <span className="font-semibold">{program.instructor}</span>
-                    </div>
+              <div className="flex justify-between items-start mb-3">
+                <h3 className="text-lg font-bold text-gray-900 flex-1">
+                  {program.name}
+                </h3>
+                <button
+                  onClick={() => togglePublish(program.id, program.isPublished)}
+                  className={`p-2 rounded-lg transition ${
+                    program.isPublished
+                      ? 'bg-green-100 text-green-600 hover:bg-green-200'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                  aria-label={program.isPublished ? 'Unpublish program' : 'Publish program'}
+                  title={program.isPublished ? 'Click to unpublish' : 'Click to publish'}
+                >
+                  {program.isPublished ? (
+                    <Eye className="h-4 w-4" />
+                  ) : (
+                    <EyeOff className="h-4 w-4" />
                   )}
-                </div>
+                </button>
+              </div>
 
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => openModal(program)}
-                    className="flex-1 flex items-center justify-center gap-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition text-sm font-semibold"
-                    aria-label={`Edit ${program.name}`}
-                    title="Edit program"
-                  >
-                    <Edit2 className="h-4 w-4" />
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(program.id, program.name)}
-                    className="flex items-center justify-center gap-2 bg-red-50 text-red-600 px-4 py-2 rounded-lg hover:bg-red-100 transition text-sm font-semibold"
-                    aria-label={`Delete ${program.name}`}
-                    title="Delete program"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                </div>
+              <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                {program.description || 'No description provided'}
+              </p>
 
-                {!program.isPublished && (
-                  <p className="text-xs text-gray-500 mt-2 text-center">Unpublished</p>
+              <div className="space-y-2 text-sm mb-4">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Price:</span>
+                  <span className="font-semibold text-blue-600">
+                    {program.currency}{program.price}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Duration:</span>
+                  <span className="font-semibold">{program.duration}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Level:</span>
+                  <span className="font-semibold">{program.level}</span>
+                </div>
+                {program.instructor && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Instructor:</span>
+                    <span className="font-semibold">{program.instructor}</span>
+                  </div>
                 )}
               </div>
-            ))}
-          </div>
-        )}
-      </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={() => openModal(program)}
+                  className="flex-1 flex items-center justify-center gap-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition text-sm font-semibold"
+                  aria-label={`Edit ${program.name}`}
+                  title="Edit program"
+                >
+                  <Edit2 className="h-4 w-4" />
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(program.id, program.name)}
+                  className="flex items-center justify-center gap-2 bg-red-50 text-red-600 px-4 py-2 rounded-lg hover:bg-red-100 transition text-sm font-semibold"
+                  aria-label={`Delete ${program.name}`}
+                  title="Delete program"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </div>
+
+              {!program.isPublished && (
+                <p className="text-xs text-gray-500 mt-2 text-center">Unpublished</p>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Add/Edit Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b flex justify-between items-center">
-              <h2 className="text-2xl font-bold">
+            <div className="p-4 sm:p-6 border-b flex justify-between items-center sticky top-0 bg-white">
+              <h2 className="text-xl sm:text-2xl font-bold">
                 {editingProgram ? 'Edit Program' : 'Add New Program'}
               </h2>
               <button 
@@ -437,7 +384,7 @@ export default function AdminProgramsPage() {
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+            <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Program Name <span className="text-red-500">*</span>
@@ -467,7 +414,7 @@ export default function AdminProgramsPage() {
                 />
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Price <span className="text-red-500">*</span>
@@ -501,7 +448,7 @@ export default function AdminProgramsPage() {
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Duration <span className="text-red-500">*</span>
@@ -564,7 +511,7 @@ export default function AdminProgramsPage() {
                 </label>
               </div>
 
-              <div className="flex gap-3 pt-4">
+              <div className="flex flex-col sm:flex-row gap-3 pt-4">
                 <button
                   type="button"
                   onClick={closeModal}

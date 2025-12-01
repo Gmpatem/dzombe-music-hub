@@ -44,9 +44,9 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Don't show navbar on auth pages or admin pages
-  if (pathname?.startsWith('/auth') || pathname?.startsWith('/dashboard/admin')) {
-    return null;
+  // Don't show navbar on auth pages, admin pages, or dashboard pages
+  if (pathname?.startsWith('/auth') || pathname?.startsWith('/admin') || pathname?.startsWith('/dashboard')) {
+    return null; // Return completely nothing - no spacer
   }
 
   // Handle logout
